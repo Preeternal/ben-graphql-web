@@ -41,5 +41,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx', '.js', '.ts'] }],
     'import/extensions': [1, 'never', { svg: 'always' }],
     'no-use-before-define': 0,
+    'import/prefer-default-export': 0,
+    'react/require-default-props': 0,
   },
 };
