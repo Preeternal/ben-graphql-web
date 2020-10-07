@@ -128,7 +128,7 @@ export const PostsDocument = gql`
 
 export function usePostsQuery(
   options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}
-): Urql.UseQueryResponse<PostsQuery> {
+) {
   return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
 }
 export const UsersDocument = gql`
@@ -144,6 +144,6 @@ export const UsersDocument = gql`
 
 export function useUsersQuery(
   options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}
-): Urql.UseQueryResponse<UsersQuery> {
+) {
   return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
 }
