@@ -11,6 +11,9 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -20,25 +23,19 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   settings: {
     'import/resolver': {
       node: {
-        extensions: [
-          '.js',
-          '.jsx',
-          '.json',
-          '.ts',
-          '.tsx',
-        ],
+        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
       },
     },
   },
   rules: {
-    'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx', '.js', '.ts'] }],
+    'react/jsx-filename-extension': [
+      1,
+      { extensions: ['.jsx', '.tsx', '.js', '.ts'] },
+    ],
     'import/extensions': [1, 'never', { svg: 'always' }],
     'no-use-before-define': 0,
     'import/prefer-default-export': 0,
