@@ -43,5 +43,6 @@ module.exports = {
     'no-use-before-define': 0,
     'import/prefer-default-export': 0,
     'react/require-default-props': 0,
+    'react/destructuring-assignment': 0,
   },
 };
