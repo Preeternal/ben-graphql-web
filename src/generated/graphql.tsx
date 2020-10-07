@@ -1,7 +1,10 @@
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
+
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -23,7 +26,6 @@ export type Query = {
   users: Array<User>;
 };
 
-
 export type QueryPostArgs = {
   id: Scalars['Int'];
 };
@@ -35,7 +37,6 @@ export type Post = {
   updatedAt: Scalars['DateTime'];
   title: Scalars['String'];
 };
-
 
 export type User = {
   __typename?: 'User';
@@ -54,27 +55,22 @@ export type Mutation = {
   login: UserResponse;
 };
 
-
 export type MutationCreatePostArgs = {
   title: Scalars['String'];
 };
-
 
 export type MutationUpdatePostArgs = {
   title?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
 };
 
-
 export type MutationDeletePostArgs = {
   id: Scalars['Float'];
 };
 
-
 export type MutationRegisterArgs = {
   options: UsernamePasswordInput;
 };
-
 
 export type MutationLoginArgs = {
   options: UsernamePasswordInput;
@@ -97,54 +93,57 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
-export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type PostsQueryVariables = Exact<{ [key: string]: never }>;
 
+export type PostsQuery = { __typename?: 'Query' } & {
+  posts: Array<
+    { __typename?: 'Post' } & Pick<
+      Post,
+      'id' | 'createdAt' | 'updatedAt' | 'title'
+    >
+  >;
+};
 
-export type PostsQuery = (
-  { __typename?: 'Query' }
-  & { posts: Array<(
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'createdAt' | 'updatedAt' | 'title'>
-  )> }
-);
+export type UsersQueryVariables = Exact<{ [key: string]: never }>;
 
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UsersQuery = (
-  { __typename?: 'Query' }
-  & { users: Array<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'username' | 'createdAt' | 'updatedAt'>
-  )> }
-);
-
+export type UsersQuery = { __typename?: 'Query' } & {
+  users: Array<
+    { __typename?: 'User' } & Pick<
+      User,
+      'id' | 'username' | 'createdAt' | 'updatedAt'
+    >
+  >;
+};
 
 export const PostsDocument = gql`
-    query Posts {
-  posts {
-    id
-    createdAt
-    updatedAt
-    title
+  query Posts {
+    posts {
+      id
+      createdAt
+      updatedAt
+      title
+    }
   }
-}
-    `;
+`;
 
-export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
+export function usePostsQuery(
+  options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}
+): Urql.UseQueryResponse<PostsQuery> {
   return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
-};
-export const UsersDocument = gql`
-    query Users {
-  users {
-    id
-    username
-    createdAt
-    updatedAt
-  }
 }
-    `;
+export const UsersDocument = gql`
+  query Users {
+    users {
+      id
+      username
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
-export function useUsersQuery(options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}) {
+export function useUsersQuery(
+  options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}
+): Urql.UseQueryResponse<UsersQuery> {
   return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
-};
+}
