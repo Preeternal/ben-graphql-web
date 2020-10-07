@@ -93,17 +93,6 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
-export type PostsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type PostsQuery = { __typename?: 'Query' } & {
-  posts: Array<
-    { __typename?: 'Post' } & Pick<
-      Post,
-      'id' | 'createdAt' | 'updatedAt' | 'title'
-    >
-  >;
-};
-
 export type UsersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UsersQuery = { __typename?: 'Query' } & {
@@ -115,22 +104,6 @@ export type UsersQuery = { __typename?: 'Query' } & {
   >;
 };
 
-export const PostsDocument = gql`
-  query Posts {
-    posts {
-      id
-      createdAt
-      updatedAt
-      title
-    }
-  }
-`;
-
-export function usePostsQuery(
-  options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}
-) {
-  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
-}
 export const UsersDocument = gql`
   query Users {
     users {
