@@ -5,6 +5,7 @@ import { useMutation } from 'urql';
 
 import { Wrapper } from '../components/Wrapper';
 import { InputField } from '../components/InputField';
+import { Mutation } from '../generated/graphql';
 
 const REGISTER_MUT = `
 mutation Register($username: String!, $password: String!) {
@@ -17,19 +18,20 @@ mutation Register($username: String!, $password: String!) {
       id
       username
       createdAt
+      updatedAt
     }
   }
 }`;
 
 const Register = () => {
-  const [, register] = useMutation(REGISTER_MUT);
+  const [, register] = useMutation<Mutation>(REGISTER_MUT);
   return (
     <Wrapper variant="small">
       <Formik
         initialValues={{ username: '', password: '' }}
         onSubmit={async values => {
           const response = await register(values);
-          return response;
+          return response.data.register?.user?.id;
         }}
       >
         {({ isSubmitting }) => (
