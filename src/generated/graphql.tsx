@@ -93,6 +93,38 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
+export type RegisterMutationVariables = Exact<{
+  username: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+export type RegisterMutation = { __typename?: 'Mutation' } & {
+  register: { __typename?: 'UserResponse' } & {
+    errors?: Maybe<
+      Array<
+        { __typename?: 'FieldError' } & Pick<FieldError, 'field' | 'message'>
+      >
+    >;
+    user?: Maybe<
+      { __typename?: 'User' } & Pick<
+        User,
+        'id' | 'username' | 'createdAt' | 'updatedAt'
+      >
+    >;
+  };
+};
+
+export type PostsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PostsQuery = { __typename?: 'Query' } & {
+  posts: Array<
+    { __typename?: 'Post' } & Pick<
+      Post,
+      'id' | 'createdAt' | 'updatedAt' | 'title'
+    >
+  >;
+};
+
 export type UsersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UsersQuery = { __typename?: 'Query' } & {
@@ -104,6 +136,44 @@ export type UsersQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export const RegisterDocument = gql`
+  mutation Register($username: String!, $password: String!) {
+    register(options: { username: $username, password: $password }) {
+      errors {
+        field
+        message
+      }
+      user {
+        id
+        username
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+export function useRegisterMutation() {
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(
+    RegisterDocument
+  );
+}
+export const PostsDocument = gql`
+  query Posts {
+    posts {
+      id
+      createdAt
+      updatedAt
+      title
+    }
+  }
+`;
+
+export function usePostsQuery(
+  options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}
+) {
+  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
+}
 export const UsersDocument = gql`
   query Users {
     users {
