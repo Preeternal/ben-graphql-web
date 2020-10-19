@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { Box, Button } from '@chakra-ui/core';
+import { Box, Button, Flex, Link } from '@chakra-ui/core';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import { withUrqlClient } from 'next-urql';
@@ -41,6 +42,12 @@ const Login = () => {
                 type="password"
               />
             </Box>
+            <Flex mt={2}>
+              <NextLink href="/forgot-password">
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <Link ml="auto">forgot password?</Link>
+              </NextLink>
+            </Flex>
             <Button
               mt={4}
               type="submit"
