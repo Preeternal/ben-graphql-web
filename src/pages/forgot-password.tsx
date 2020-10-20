@@ -41,7 +41,8 @@ const ForgotPassword = () => {
                 forgot password
               </Button>
             </Form>
-          )}
+          )
+        }
       </Formik>
     </Wrapper>
   );

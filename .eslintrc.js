@@ -41,6 +41,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'react/require-default-props': 0,
     'react/destructuring-assignment': 0,
+    'react/jsx-curly-newline': 0,
     '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 };
