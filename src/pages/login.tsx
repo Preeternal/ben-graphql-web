@@ -13,6 +13,7 @@ import { createUrqlClient } from '../utils/createUrqlClients';
 
 const Login = () => {
   const router = useRouter();
+  console.log(router);
   const [, login] = useLoginMutation();
   return (
     <Wrapper variant="small">

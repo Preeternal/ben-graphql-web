@@ -9,9 +9,9 @@ type Props = {
 
 export const Layout = ({ children, variant }: Props) => {
   return (
-    <Wrapper variant={variant}>
+    <>
       <NavBar />
-      {children}
-    </Wrapper>
+      <Wrapper variant={variant}>{children}</Wrapper>
+    </>
   );
 };
