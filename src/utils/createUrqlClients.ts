@@ -1,5 +1,10 @@
-import { dedupExchange, fetchExchange, Exchange } from 'urql';
-import { cacheExchange, Resolver } from '@urql/exchange-graphcache';
+import {
+  dedupExchange,
+  fetchExchange,
+  Exchange,
+  stringifyVariables,
+} from 'urql';
+import { cacheExchange, DataField, Resolver } from '@urql/exchange-graphcache';
 import Router from 'next/router';
 import { pipe, tap } from 'wonka';
 
@@ -36,9 +41,17 @@ const cursorPagination = (): Resolver => {
     if (size === 0) {
       return undefined;
     }
+    const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`;
+    const isItInTheCache = cache.resolveFieldByKey(entityKey, fieldKey);
+    // eslint-disable-next-line no-param-reassign
+    info.partial = !isItInTheCache;
+    const results: string[] = [];
     fieldInfos.forEach(fi => {
-      cache.resolveFieldByKey(entityKey, fi.fieldKey);
+      const data = cache.resolveFieldByKey(entityKey, fi.fieldKey) as string[];
+      results.push(...data);
     });
+
+    return results;
 
     // const visited = new Set();
     // let result: NullArray<string> = [];
