@@ -29,6 +29,7 @@ const Index = () => {
   }
   return (
     <Layout>
+      <title>lireddit</title>
       <Flex align="center">
         <Heading>LiReddit</Heading>
         <NextLink href="/create-post">
