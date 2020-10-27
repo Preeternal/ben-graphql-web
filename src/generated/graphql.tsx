@@ -135,6 +135,11 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
+export type PostSnippetFragment = { __typename?: 'Post' } & Pick<
+  Post,
+  'id' | 'createdAt' | 'updatedAt' | 'title' | 'points' | 'text' | 'textSnippet'
+> & { creator: { __typename?: 'User' } & Pick<User, 'id' | 'username'> };
+
 export type RegularErrorFragment = { __typename?: 'FieldError' } & Pick<
   FieldError,
   'field' | 'message'
@@ -224,12 +229,7 @@ export type PostsQueryVariables = Exact<{
 
 export type PostsQuery = { __typename?: 'Query' } & {
   posts: { __typename?: 'PaginatedPosts' } & Pick<PaginatedPosts, 'hasMore'> & {
-      posts: Array<
-        { __typename?: 'Post' } & Pick<
-          Post,
-          'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'textSnippet'
-        > & { creator: { __typename?: 'User' } & Pick<User, 'id' | 'username'> }
-      >;
+      posts: Array<{ __typename?: 'Post' } & PostSnippetFragment>;
     };
 };
 
@@ -244,6 +244,21 @@ export type UsersQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export const PostSnippetFragmentDoc = gql`
+  fragment PostSnippet on Post {
+    id
+    createdAt
+    updatedAt
+    title
+    points
+    text
+    textSnippet
+    creator {
+      id
+      username
+    }
+  }
+`;
 export const RegularErrorFragmentDoc = gql`
   fragment RegularError on FieldError {
     field
@@ -371,19 +386,11 @@ export const PostsDocument = gql`
     posts(limit: $limit, cursor: $cursor) {
       hasMore
       posts {
-        id
-        createdAt
-        updatedAt
-        title
-        text
-        textSnippet
-        creator {
-          id
-          username
-        }
+        ...PostSnippet
       }
     }
   }
+  ${PostSnippetFragmentDoc}
 `;
 
 export function usePostsQuery(
