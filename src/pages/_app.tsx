@@ -1,11 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { CSSReset, ThemeProvider } from '@chakra-ui/core';
 import React from 'react';
-import {
-  ThemeProvider,
-  CSSReset,
-  // ColorModeProvider,
-} from '@chakra-ui/core';
-
 import theme from '../theme';
 
 function MyApp({ Component, pageProps }: any) {

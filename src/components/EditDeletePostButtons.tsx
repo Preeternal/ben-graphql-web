@@ -9,8 +9,8 @@ type Props = {
 };
 
 export const EditDeletePostButtons = ({ id, creatorId }: Props) => {
-  const [{ data: meData }] = useMeQuery();
-  const [, deletePost] = useDeletePostMutation();
+  const { data: meData } = useMeQuery();
+  const [deletePost] = useDeletePostMutation();
 
   if (meData?.me?.id !== creatorId) {
     return null;
@@ -24,7 +24,12 @@ export const EditDeletePostButtons = ({ id, creatorId }: Props) => {
         icon="delete"
         aria-label="Delete Post"
         onClick={() => {
-          deletePost({ id });
+          deletePost({
+            variables: { id },
+            update: cache => {
+              cache.evict({ id: `Post:${id}` });
+            },
+          });
         }}
       />
     </Box>
